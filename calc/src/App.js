@@ -38,7 +38,7 @@ const App = () => {
 
   return (
     <div className='container'>
-      <input type='text' value={result}  />
+      <input type='text' value={result} readOnly />
       <div className='keypad'>
         {buttons.map((button, index) => (
           <button key={index} onClick={() => handleClick(button)}>
