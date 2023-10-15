@@ -1,25 +1,53 @@
-import logo from './logo.svg';
-import './App.css';
+import React, { useState } from 'react';
+import './App.css'
 
-function App() {
+const App = () => {
+  const [result, setResult] = useState("");
+
+  const buttons = ["AC", "CE", ".", "/", "7", "8", "9", "*", "4", "5", "6", "-", "1", "2", "3", "+", "0", "="];
+
+  const handleClick = (buttonValue) => {
+    if (buttonValue === "=") {
+      calculate();
+    } else if (buttonValue === "AC") {
+      reset();
+    }
+    else if (buttonValue === "CE") {
+      backspace();
+    }
+    else {
+      setResult(result + buttonValue);
+    }
+  };
+
+  const calculate = () => {
+    try {
+      setResult(eval(result).toString());
+    } catch (error) {
+      setResult("Error");
+    }
+  };
+
+  const reset = () => {
+    setResult("");
+  };
+
+  const backspace = () => {
+    setResult(result.slice(0, -1));
+  }
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+    <div className='container'>
+      <input type='text' value={result} readOnly />
+      <div className='keypad'>
+        {buttons.map((button, index) => (
+          <button key={index} onClick={() => handleClick(button)}>
+            {button}
+          </button>
+        ))}
+      </div>
     </div>
   );
-}
+};
 
 export default App;
